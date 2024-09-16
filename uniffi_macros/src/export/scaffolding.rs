@@ -267,6 +267,7 @@ pub(super) fn gen_ffi_function(
                 ::uniffi::rust_call(call_status, || {
                     match uniffi_lift_args() {
                         ::std::result::Result::Ok(uniffi_args) => {
+                            let _: () = crate::uniffi_call_hook();
                             let uniffi_result = #rust_fn_call;
                             #lower_return(#convert_result)
                         }
@@ -297,6 +298,7 @@ pub(super) fn gen_ffi_function(
                     async move {
                         match uniffi_lifted_args {
                             ::std::result::Result::Ok(uniffi_args) => {
+                                let _: () = crate::uniffi_call_hook();
                                 let uniffi_result = #future_expr.await;
                                 Ok(#convert_result)
                             }
